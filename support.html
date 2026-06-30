@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinR666 - Customer Support Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: radial-gradient(circle at top, #0d5c2f, #052111); color: white; user-select: none; font-family: sans-serif; overflow-x: hidden; }
+        .gold-glow { color: #FFD700; text-shadow: 0 0 10px #ffaa00; font-weight: 900; }
+        
+        /* কন্টাক্ট মেথড কার্ড স্টাইল */
+        .support-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .support-card:active {
+            transform: scale(0.95);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        /* ফুটার বাটন স্টাইল */
+        .footer-icon { color: #3b82f6; text-shadow: 0 0 12px #3b82f6; transition: 0.3s; }
+        .footer-icon:active { transform: scale(0.9); color: #FFD700; }
+        .active-support { color: #FFD700; text-shadow: 0 0 15px #FFD700; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <header class="fixed top-0 w-full z-50 bg-[#052111]/90 backdrop-blur-lg border-b border-yellow-500/30 px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="index.html" class="text-xl text-yellow-500 active:scale-90 transition"><i class="fas fa-chevron-left"></i></a>
+            <h1 class="text-xl gold-glow italic tracking-tighter">Support Center</h1>
+        </div>
+        <div class="flex gap-4 items-center">
+            <a href="profile.html"><i class="fas fa-user-circle text-xl text-yellow-500"></i></a>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-32 px-4 max-w-md mx-auto min-h-screen">
+        
+        <div class="text-center mb-8">
+            <div class="w-20 h-20 bg-gradient-to-tr from-yellow-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-[0_0_20px_rgba(255,215,0,0.4)]">
+                <i class="fas fa-headset text-3xl text-black"></i>
+            </div>
+            <h2 class="text-xl font-black uppercase tracking-tight text-white">আমরা আপনাকে সাহায্য করতে প্রস্তুত</h2>
+            <p class="text-xs text-gray-400 mt-1">যেকোনো সমস্যা বা জিজ্ঞাসায় ২৪/৭ আমাদের অফিশিয়াল এজেন্টদের সাথে যোগাযোগ করুন।</p>
+        </div>
+
+        <div class="space-y-3 mb-8">
+            <a id="telegram-link" href="https://t.me/your_official_channel" target="_blank" class="support-card p-4 flex items-center justify-between block">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-sky-500/20 rounded-full flex items-center justify-center border border-sky-500/30">
+                        <i class="fab fa-telegram-plane text-2xl text-sky-400"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Official Telegram</h4>
+                        <p class="text-[10px] text-gray-400">দ্রুত আপডেট ও কাস্টমার কেয়ার</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-500 text-xs"></i>
+            </a>
+
+            <a id="whatsapp-link" href="https://wa.me/your_number" target="_blank" class="support-card p-4 flex items-center justify-between block">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center border border-green-500/30">
+                        <i class="fab fa-whatsapp text-2xl text-green-400"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">WhatsApp Support</h4>
+                        <p class="text-[10px] text-gray-400">ডিপোজিট ও উইথড্র সংক্রান্ত হেল্প</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-500 text-xs"></i>
+            </a>
+
+            <a id="livechat-link" href="#" class="support-card p-4 flex items-center justify-between block">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center border border-amber-500/30">
+                        <i class="fas fa-comments text-2xl text-amber-400"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Live Chat 24/7</h4>
+                        <p class="text-[10px] text-gray-400">সরাসরি আমাদের এজেন্টের সাথে চ্যাট</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-500 text-xs"></i>
+            </a>
+        </div>
+
+        <div class="bg-black/30 border border-yellow-500/10 p-5 rounded-[2rem] shadow-inner">
+            <h3 class="text-sm font-black text-yellow-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <i class="fas fa-paper-plane"></i> এখানে সরাসরি মেসেজ লিখুন
+            </h3>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="text-[10px] text-gray-400 uppercase font-bold block mb-1">User ID / Phone*</label>
+                    <input type="text" id="supportUserId" placeholder="আপনার একাউন্ট আইডি বা নাম্বার দিন" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-xs font-bold outline-none text-white focus:border-yellow-500/50">
+                </div>
+                <div>
+                    <label class="text-[10px] text-gray-400 uppercase font-bold block mb-1">Your Issue / সমস্যা*</label>
+                    <textarea id="supportMessage" rows="3" placeholder="আপনার সমস্যাটি বিস্তারিত লিখুন..." class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-xs font-bold outline-none text-white focus:border-yellow-500/50 resize-none"></textarea>
+                </div>
+                <button onclick="submitSupportMessage()" class="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-black font-black py-3 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all mt-2">
+                    Send Message
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="fixed bottom-0 w-full bg-[#052111] border-t border-yellow-500/20 h-20 flex justify-around items-center px-2 z-[100]">
+        <a href="index.html" class="flex flex-col items-center footer-icon">
+            <i class="fas fa-home text-xl"></i><span class="text-[9px] mt-1 font-bold">Home</span>
+        </a>
+        <a href="deposit.html" class="flex flex-col items-center footer-icon">
+            <i class="fas fa-wallet text-xl"></i><span class="text-[9px] mt-1 font-bold">Deposit</span>
+        </a>
+        <a href="#" class="flex flex-col items-center active-support">
+            <i class="fas fa-headset text-xl"></i><span class="text-[9px] mt-1 font-bold">Support</span>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center footer-icon">
+            <i class="fas fa-user-circle text-xl"></i><span class="text-[9px] mt-1 font-bold">Account</span>
+        </a>
+    </footer>
+
+    <script>
+        const API_URL = "http://localhost:5000"; // Render এ ডিপ্লয় করার পর তোমার ব্যাকএন্ড ইউআরএল এখানে বসবে
+
+        // পেজ লোড হওয়ার সাথে সাথে এডমিনের সেট করা অফিশিয়াল লিংকগুলো সিঙ্ক হবে
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch(`${API_URL}/api/admin/support-settings`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.telegram) document.getElementById('telegram-link').href = data.telegram;
+                if(data.whatsapp) document.getElementById('whatsapp-link').href = data.whatsapp;
+                if(data.livechat) document.getElementById('livechat-link').href = data.livechat;
+            }).catch(e => console.log("Support links sync error"));
+
+            // কারেন্ট লগইন থাকা ইউজার আইডি ইনপুটে অটো বসানো
+            const savedUserId = localStorage.getItem("user_id");
+            if(savedUserId) {
+                document.getElementById('supportUserId').value = savedUserId;
+            }
+        });
+
+        // সরাসরি ইন-অ্যাপ মেসেজ পাঠানোর ফাংশন
+        function submitSupportMessage() {
+            const userId = document.getElementById('supportUserId').value;
+            const message = document.getElementById('supportMessage').value;
+
+            if(!userId) return alert("দয়া করে আপনার ইউজার আইডি অথবা ফোন নাম্বারটি লিখুন!");
+            if(!message) return alert("দয়া করে আপনার সমস্যার বিবরণটি লিখুন!");
+
+            const payload = {
+                user_id: userId,
+                message: message,
+                timestamp: new Date().toISOString()
+            };
+
+            fetch(`${API_URL}/api/support/message`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert("আপনার মেসেজটি সফলভাবে কাস্টমার কেয়ারে পাঠানো হয়েছে। আমাদের এজেন্ট খুব শীঘ্রই আপনার সাথে যোগাযোগ করবে। ধন্যবাদ!");
+                    document.getElementById('supportMessage').value = ""; // বক্স খালি করা
+                } else {
+                    alert("মেসেজ পাঠাতে ব্যর্থ হয়েছে: " + data.message);
+                }
+            })
+            .catch(err => alert("সার্ভার কানেকশন এরর! দয়া করে লাইভ চ্যাট বা টেলিগ্রামে যোগাযোগ করুন।"));
+        }
+    </script>
+</body>
+                                                                                               </html>
+                          
