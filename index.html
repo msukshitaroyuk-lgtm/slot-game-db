@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WINR666 - Premium Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: radial-gradient(circle at top, #0d5c2f, #052111); color: white; user-select: none; font-family: sans-serif; overflow-x: hidden; }
+        .gold-glow { color: #FFD700; text-shadow: 0 0 10px #ffaa00; font-weight: 900; }
+        
+        /* ফুটার বাটন স্টাইল - নীল চকমকে (Blue Glow) */
+        .footer-icon { color: #3b82f6; text-shadow: 0 0 12px #3b82f6; transition: 0.3s; }
+        .footer-icon:active { transform: scale(0.9); color: #FFD700; }
+        .active-home { color: #FFD700; text-shadow: 0 0 15px #FFD700; }
+
+        /* সাইডবার এনিমেশন */
+        #sidebar { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .sidebar-link { border-bottom: 1px solid rgba(255,215,0,0.1); padding: 18px; display: block; color: #e2e8f0; font-weight: 600; }
+        .sidebar-link:active { background: rgba(255,215,0,0.05); }
+
+        /* মাঝখানের রেফার বাটন এনিমেশন */
+        .refer-btn {
+            width: 72px; height: 72px; background: linear-gradient(45deg, #FFD700, #ff8800);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+            border: 4px solid #052111; box-shadow: 0 0 25px #ffaa00; z-index: 100;
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.1); } 100% { transform: translateX(-50%) scale(1); } }
+
+        /* গেম কার্ড স্টাইল */
+        .game-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.1); border-radius: 1.25rem; }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-[#052111] z-[150] transform -translate-x-full border-r border-yellow-500/30 shadow-2xl">
+        <div class="p-6 border-b border-yellow-500/30 flex justify-between items-center bg-black/20">
+            <h2 class="text-xl gold-glow italic">WINR666 MENU</h2>
+            <button onclick="toggleSidebar()" class="text-yellow-500 text-3xl">&times;</button>
+        </div>
+        <nav class="mt-4">
+            <a href="change_password.html" class="sidebar-link"><i class="fas fa-key mr-3 text-yellow-500"></i> Change Password</a>
+            <a href="send_message.html" class="sidebar-link"><i class="fas fa-paper-plane mr-3 text-yellow-500"></i> Send Message</a>
+            <a href="language.html" class="sidebar-link"><i class="fas fa-language mr-3 text-yellow-500"></i> Language Settings</a>
+            <a href="#" onclick="logout()" class="sidebar-link text-red-500 mt-10"><i class="fas fa-sign-out-alt mr-3"></i> Logout Account</a>
+        </nav>
+    </div>
+    <div id="overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-[140] hidden backdrop-blur-sm"></div>
+
+    <!-- লাল খাম বোনাস মডাল (শুরুতে লুকানো থাকবে, রিয়েল-টাইম চেক করে শো করবে) -->
+    <div id="bonusModal" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/85 backdrop-blur-md hidden">
+        <div class="relative text-center p-10 bg-red-600 rounded-[3rem] border-4 border-yellow-400 shadow-[0_0_60px_rgba(255,0,0,0.6)] animate-bounce-slow">
+            <!-- ক্রস চিহ্ন (Close Button) -->
+            <button onclick="document.getElementById('bonusModal').classList.add('hidden')" class="absolute top-4 right-6 text-white text-3xl font-bold hover:text-yellow-400 transition">&times;</button>
+            
+            <i class="fas fa-envelope-open-text text-8xl text-yellow-300 mb-6 drop-shadow-lg"></i>
+            <h2 class="text-3xl font-black text-white italic mb-8 uppercase tracking-tighter">Daily Gift!</h2>
+            <button onclick="claimBonus()" class="bg-yellow-400 text-red-700 font-black px-12 py-4 rounded-full text-xl shadow-2xl hover:bg-white active:scale-90 transition-all uppercase">
+                Claim Now
+            </button>
+        </div>
+    </div>
+
+    <header class="fixed top-0 w-full z-50 bg-[#052111]/90 backdrop-blur-lg border-b border-yellow-500/30 px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <button onclick="toggleSidebar()" class="text-2xl text-yellow-500 active:scale-90 transition"><i class="fas fa-bars"></i></button>
+            <h1 class="text-2xl gold-glow italic tracking-tighter">WINR666</h1>
+        </div>
+        
+        <!-- ইউজার স্ট্যাটাস অনুযায়ী ডাইনামিক হেডার এরিয়া -->
+        <div id="header-auth-area">
+            <!-- জাভাস্ক্রিপ্ট এখানে ব্যালেন্স অথবা লগইন বাটন বসাবে -->
+        </div>
+    </header>
+
+    <main class="pt-24 pb-32 px-4 scroll-hide overflow-y-auto h-screen">
+        <!-- এডমিন প্যানেল হিরো ব্যানার এরিয়া -->
+        <div id="banner-container">
+            <!-- ডিফল্ট ব্যানার, যা পরে পিএনজি লিংক দিয়ে রিপ্লেস হবে -->
+            <div class="w-full h-44 bg-gradient-to-tr from-green-900 via-green-700 to-yellow-600 rounded-[2.5rem] mb-8 flex items-center justify-center border border-yellow-500/20 relative shadow-2xl overflow-hidden">
+                <div class="z-10 text-center px-4">
+                    <h2 class="text-3xl font-black italic uppercase tracking-tighter text-white drop-shadow-md">Mega Jackpot</h2>
+                    <p class="text-[10px] font-bold text-yellow-200 tracking-[0.3em]">RELIABLE • FAST • SECURE</p>
+                </div>
+                <i class="fas fa-gem absolute right-[-20px] bottom-[-20px] text-white/5 text-[160px] rotate-12"></i>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-4 px-1">
+            <h3 class="text-yellow-500 text-[11px] font-black uppercase tracking-widest flex items-center">
+                <i class="fas fa-fire-alt mr-2"></i> All Premium Games
+            </h3>
+        </div>
+
+        <!-- গেম গ্রিড এরিয়া -->
+        <div id="games-grid" class="grid grid-cols-3 gap-3 mb-10">
+            <!-- এপিআই থেকে গেমগুলো এখানে লোড হবে -->
+            <div class='col-span-3 py-10 text-center text-gray-500 text-xs italic'>Loading games...</div>
+        </div>
+    </main>
+
+    <a href="refer.html" class="refer-btn">
+        <i class="fas fa-user-plus text-2xl text-black"></i>
+    </a>
+
+    <footer class="fixed bottom-0 w-full bg-[#052111] border-t border-yellow-500/20 h-20 flex justify-around items-center px-2 z-[100]">
+        <a href="index.html" class="flex flex-col items-center active-home">
+            <i class="fas fa-home text-xl"></i><span class="text-[9px] mt-1 font-bold">Home</span>
+        </a>
+        <a href="deposit.html" class="flex flex-col items-center footer-icon pr-10">
+            <i class="fas fa-wallet text-xl"></i><span class="text-[9px] mt-1 font-bold">Deposit</span>
+        </a>
+        <div class="w-10"></div> <a href="withdrawal.html" class="flex flex-col items-center footer-icon pl-10">
+            <i class="fas fa-money-check-alt text-xl"></i><span class="text-[9px] mt-1 font-bold">Withdraw</span>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center footer-icon">
+            <i class="fas fa-user-circle text-xl"></i><span class="text-[9px] mt-1 font-bold">Account</span>
+        </a>
+    </footer>
+
+    <script>
+        // ব্যাকএন্ড সার্ভার ইউআরএল (Render এ ডিপ্লয় করার পর এখানে রিয়েল লিংক বসবে)
+        const API_URL = "http://localhost:5000"; 
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (sidebar.style.transform === 'translateX(0%)') {
+                sidebar.style.transform = 'translateX(-100%)';
+                overlay.classList.add('hidden');
+            } else {
+                sidebar.style.transform = 'translateX(0%)';
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        // রিয়েল-টাইম ডাটা লোড ফাংশন
+        document.addEventListener("DOMContentLoaded", function() {
+            loadSettingsAndGames();
+            checkUserAuth();
+        });
+
+        function loadSettingsAndGames() {
+            // ১. এডমিন ব্যানার ও সেটিংস লোড করা
+            fetch(`${API_URL}/api/admin/settings`)
+            .then(res => res.json())
+            .then(settings => {
+                if(settings && settings.banner_url) {
+                    document.getElementById('banner-container').innerHTML = `
+                        <div class="w-full h-44 rounded-[2.5rem] mb-8 border border-yellow-500/20 shadow-2xl overflow-hidden">
+                            <img src="${settings.banner_url}" class="w-full h-full object-cover pointer-events-none" oncontextmenu="return false;">
+                        </div>`;
+                }
+            }).catch(err => console.log("Settings load error"));
+
+            // ২. একটিভ গেম লিস্ট লোড করা
+            fetch(`${API_URL}/api/games`)
+            .then(res => res.json())
+            .then(games => {
+                const grid = document.getElementById('games-grid');
+                if(games.length > 0) {
+                    grid.innerHTML = games.map(game => `
+                        <div class="game-card p-2 text-center transition active:scale-95">
+                            <a href="play.html?id=${game.id}" class="block">
+                                <div class="w-full aspect-square bg-black/40 rounded-2xl mb-2 flex items-center justify-center overflow-hidden border border-white/5">
+                                    <img src="${game.game_image}" class="object-cover w-full h-full pointer-events-none" oncontextmenu="return false;">
+                                </div>
+                                <span class="text-[9px] font-bold text-gray-300 truncate block px-1">${game.game_name}</span>
+                            </a>
+                        </div>
+                    `).join('');
+                } else {
+                    grid.innerHTML = "<div class='col-span-3 py-10 text-center text-gray-500 text-xs italic'>No games loaded from admin.</div>";
+                }
+            }).catch(err => {
+                document.getElementById('games-grid').innerHTML = "<div class='col-span-3 py-10 text-center text-red-500 text-xs italic'>Server error loading games!</div>";
+            });
+        }
+
+        function checkUserAuth() {
+            const userId = localStorage.getItem("user_id"); // ইউজার সেশন চেক
+            const authArea = document.getElementById('header-auth-area');
+
+            if (userId) {
+                // ইউজার লগইন থাকলে লেটেস্ট ব্যালেন্স এবং লাল খাম বোনাস চেক করা
+                fetch(`${API_URL}/api/user/profile?id=${userId}`)
+                .then(res => res.json())
+                .then(user => {
+                    authArea.innerHTML = `
+                        <div class="bg-black/60 px-4 py-2 rounded-full border border-yellow-500/40 flex items-center shadow-inner">
+                            <i class="fas fa-coins text-yellow-500 mr-2 text-sm"></i>
+                            <span id="header-balance" class="text-sm font-black text-green-400">৳ ${parseFloat(user.balance).toFixed(2)}</span>
+                        </div>`;
+                    
+                    // আজ বোনাস ক্লেইম না করে থাকলে লাল খাম দেখাবে
+                    if(!user.is_bonus_claimed_today) {
+                        document.getElementById('bonusModal').classList.remove('hidden');
+                    }
+                });
+            } else {
+                // লগইন না থাকলে হেডার অপশন
+                authArea.innerHTML = `
+                    <div class="flex space-x-2">
+                        <a href="login.html" class="bg-yellow-500 text-black px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-md active:scale-95 transition">Login</a>
+                        <a href="register.html" class="bg-transparent border border-yellow-500 text-yellow-500 px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-tighter shadow-md active:scale-95 transition">Register</a>
+                    </div>`;
+            }
+        }
+
+        function claimBonus() {
+            const userId = localStorage.getItem("user_id");
+            fetch(`${API_URL}/api/user/claim-bonus`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: userId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert("অভিনন্দন! এডমিন নির্ধারিত ৳" + data.amount + " বোনাস সফলভাবে যোগ করা হয়েছে।");
+                    document.getElementById('bonusModal').classList.add('hidden');
+                    checkUserAuth(); // ব্যালেন্স রিয়েল-টাইম আপডেট
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => alert("সিস্টেম এরর!"));
+        }
+
+        function logout() {
+            localStorage.removeItem("user_id");
+            location.reload();
+        }
+    </script>
+</body>
+</html>
+
