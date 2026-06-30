@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinR666 - Complete Deposit System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #ffffff; font-family: sans-serif; user-select: none; }
+        /* ফটোকপি স্টাইল পেমেন্ট বক্স */
+        .method-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 2px;
+            text-align: center;
+            cursor: pointer;
+            background: #fff;
+            position: relative;
+        }
+        .method-box.active {
+            border: 1.5px solid #ef4444;
+        }
+        .method-box.active::after {
+            content: "\f058";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            color: #ef4444;
+            font-size: 10px;
+        }
+        .amt-grid-btn {
+            border: 1px solid #e2e8f0;
+            padding: 8px 0;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 4px;
+            background: #fff;
+        }
+    </style>
+</head>
+<body class="max-w-md mx-auto min-h-screen shadow-lg">
+
+    <header class="bg-[#1b1b1b] text-white p-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <i class="fas fa-chevron-left text-sm cursor-pointer" onclick="goBack()"></i>
+            <h1 class="text-md font-bold">Deposit</h1>
+        </div>
+        <div class="flex gap-4 items-center">
+            <i class="fas fa-file-invoice-dollar text-lg cursor-pointer"></i>
+            <i class="fas fa-headset text-lg cursor-pointer"></i>
+        </div>
+    </header>
+
+    <!-- STEP 1: মেথড এবং অ্যামাউন্ট সিলেক্ট -->
+    <div id="step1" class="p-4">
+        <h3 class="text-[13px] font-bold text-gray-800 mb-3 flex items-center gap-1">
+            <span class="text-orange-500">●</span> Deposit Method
+        </h3>
+        
+        <!-- ডাইনামিক মেথড গ্রিড -->
+        <div id="methods-container" class="grid grid-cols-4 gap-2 mb-4">
+            <div onclick="selectMethod('Bkash', this)" class="method-box active">
+                <img src="https://logowik.com/content/uploads/images/bkash-payment-icon9465.jpg" class="w-10 h-10 mx-auto object-contain method-img" data-name="bkash">
+                <p class="text-[9px] mt-1 font-bold text-gray-600">Bkash</p>
+            </div>
+            <div onclick="selectMethod('Nagad', this)" class="method-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nagad_Logo.svg/1200px-Nagad_Logo.svg.png" class="w-10 h-10 mx-auto object-contain method-img" data-name="nagad">
+                <p class="text-[9px] mt-1 font-bold text-gray-600">NAGAD</p>
+            </div>
+            <div onclick="selectMethod('Rocket', this)" class="method-box">
+                <img src="https://seeklogo.com/images/R/rocket-logo-5D19363943-seeklogo.com.png" class="w-10 h-10 mx-auto object-contain method-img" data-name="rocket">
+                <p class="text-[9px] mt-1 font-bold text-gray-600">ROCKET</p>
+            </div>
+            <div onclick="selectMethod('Bank', this)" class="method-box">
+                <div class="w-10 h-10 mx-auto flex items-center justify-center bg-gray-200 rounded-full"><i class="fas fa-university text-gray-600 text-lg"></i></div>
+                <p class="text-[9px] mt-1 font-bold text-gray-600">BANK</p>
+            </div>
+            <div onclick="selectMethod('GooglePay', this)" class="method-box">
+                <div class="w-10 h-10 mx-auto flex items-center justify-center bg-gray-200 rounded-full"><i class="fab fa-google text-gray-600 text-lg"></i></div>
+                <p class="text-[9px] mt-1 font-bold text-gray-600">Google Pay</p>
+            </div>
+            <div onclick="selectMethod('USDT', this)" class="method-box">
+                <img src="https://static.okx.com/cdn/assets/imgs/221/9E9A68EB7C99F72D.png" class="w-10 h-10 mx-auto object-contain method-img" data-name="usdt">
+                <p class="text-[9px] mt-1 font-bold text-gray-600">USDT <span class="text-red-500">+2%</span></p>
+            </div>
+        </div>
+
+        <div class="bg-[#fff5f5] border border-[#ffe5e5] p-3 rounded-lg mb-6">
+            <p id="admin-slogan-1" class="text-[11px] text-red-500 italic font-medium">
+                ডিপোজিট করার নোট: ডিপোজিট করার পরে আপনার তথ্য সঠিকভাবে জমা দিন। সর্বদা সর্বশেষ অ্যাকাউন্ট ব্যবহার করুন।
+            </p>
+        </div>
+
+        <h3 class="text-[13px] font-bold text-gray-800 mb-3 flex items-center gap-1">
+            <span class="text-orange-500">●</span> Deposit Amounts
+        </h3>
+        <div class="grid grid-cols-4 gap-2 mb-4">
+            <button onclick="setAmt(100)" class="amt-grid-btn">100</button>
+            <button onclick="setAmt(200)" class="amt-grid-btn">200</button>
+            <button onclick="setAmt(500)" class="amt-grid-btn">500</button>
+            <button onclick="setAmt(1000)" class="amt-grid-btn">1,000</button>
+            <button onclick="setAmt(3000)" class="amt-grid-btn">3,000</button>
+            <button onclick="setAmt(5000)" class="amt-grid-btn">5,000</button>
+            <button onclick="setAmt(10000)" class="amt-grid-btn">10,000</button>
+            <button onclick="setAmt(20000)" class="amt-grid-btn">20,000</button>
+        </div>
+
+        <div class="relative border-b-2 border-gray-200 mb-10 mt-4">
+            <span class="absolute left-0 bottom-2 text-gray-400 font-bold text-sm">৳</span>
+            <input type="number" id="mainAmt" oninput="updateBtn()" placeholder="100 - 1,000,000" class="w-full pl-5 py-2 outline-none text-sm font-bold">
+        </div>
+
+        <button onclick="showStep2()" id="nextBtn" class="w-full bg-[#cccccc] text-white py-3 rounded-lg font-bold text-sm uppercase">Next</button>
+    </div>
+
+    <!-- STEP 2: পেমেন্ট সাবমিশন পেজ -->
+    <div id="step2" class="hidden">
+        <div class="bg-[#006a4e] text-white p-3 flex justify-between items-center shadow-lg">
+            <div class="flex flex-col">
+                <span class="text-[10px] opacity-80 uppercase font-bold">BDT <span id="popAmt">0</span>.00</span>
+                <span class="text-[11px] font-bold">কম বা বেশি ক্যাশআউট করবেন না</span>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="bg-white text-[#006a4e] px-2 py-0.5 rounded text-[10px] font-black">PAY SERVICE</div>
+                <div class="flex gap-1 mt-1 text-[8px] font-bold"><span>EN</span><span class="bg-gray-400 px-1 rounded">বাং</span></div>
+            </div>
+        </div>
+
+        <div class="p-4 space-y-4">
+            <p class="text-[11px] text-red-600 font-bold leading-tight">
+                আপনি যদি টাকার পরিমাণ পরিবর্তন করেন (BDT <span id="popAmt2">0</span>.00), আপনি ক্রেডিট পেতে সক্ষম হবেন না। <span id="admin-slogan-2"></span>
+            </p>
+
+            <div id="methodBadge" class="bg-[#f01751] text-white p-4 rounded-xl flex items-center gap-3 shadow-md">
+                <span class="font-black uppercase tracking-tighter text-sm" id="methodName">BKASH Deposit</span>
+            </div>
+
+            <!-- ওয়ালেট নাম্বার / ব্যাংক ডিটেইলস এরিয়া -->
+            <div class="bg-gray-100 p-3 rounded-lg border">
+                <p id="walletLabel" class="text-[11px] font-bold text-gray-500 italic">Wallet No*</p>
+                <div class="flex justify-between items-center mt-1">
+                    <span class="font-mono font-black text-sm text-gray-800 break-all" id="walletNo">01799942627</span>
+                    <i class="far fa-copy text-green-600 cursor-pointer" onclick="copyWallet()"></i>
+                </div>
+            </div>
+
+            <!-- ডাইনামিক ইনপুট ফর্ম (বিকাশ/নগদের জন্য TrxID, ব্যাংক/গুগল পে এর জন্য ব্যাংক রিকোয়ারমেন্ট) -->
+            <div id="dynamic-input-fields" class="space-y-4">
+                <!-- সাধারণ TrxID এরিয়া (বিকাশ, নগদ, রকেটের জন্য) -->
+                <div id="trx-id-container" class="space-y-1">
+                    <p class="text-[11px] text-red-600 font-black uppercase">ক্যাশআউটের TrxID নাম্বারটি লিখুন (প্রয়োজন)</p>
+                    <input type="text" id="trxIdInput" placeholder="TrxID অবশ্যই পূরণ করতে হবে!" class="w-full border-2 border-red-500 p-4 rounded-xl text-sm font-bold outline-none">
+                </div>
+
+                <!-- ব্যাংক ও গুগল পে এর জন্য বিশেষ ডকুমেন্ট এরিয়া (ডিফল্ট হাইড) -->
+                <div id="bank-doc-container" class="space-y-3 hidden">
+                    <div class="space-y-1">
+                        <p class="text-[11px] text-gray-700 font-black uppercase">আপনার ব্যাংক একাউন্ট / রেফারেন্স নাম লিখুন</p>
+                        <input type="text" id="bankDetailsInput" placeholder="Account Name / Holder Details" class="w-full border border-gray-300 p-3 rounded-xl text-sm font-bold outline-none">
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-[11px] text-gray-700 font-black uppercase">ব্যাংক স্টেটমেন্ট / পেমেন্ট স্ক্রিনশট আপলোড করুন</p>
+                        <input type="file" id="bankStatementFile" accept="image/*" class="w-full border border-gray-300 p-2 rounded-xl text-xs outline-none bg-white">
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="handleDepositSubmit()" class="w-full border-2 border-black py-3 rounded-xl font-black text-black uppercase hover:bg-black hover:text-white transition">নিশ্চিত</button>
+
+            <div class="bg-gray-100 p-4 rounded-xl border border-gray-300">
+                <p class="text-[10px] text-red-600 font-bold mb-1">সতর্কতাঃ</p>
+                <p id="admin-warning-text" class="text-[10px] text-gray-500 font-medium">লেনদেন আইডি বা ডকুমেন্ট সঠিকভাবে পূরণ করতে হবে, অন্যথায় স্কোর ব্যর্থ হবে!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ওটিপি (OTP) ভেরিফিকেশন পপ-আপ মডাল -->
+    <div id="otpModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[100] hidden p-4">
+        <div class="bg-white text-gray-800 w-full max-w-xs rounded-2xl p-6 text-center shadow-2xl border">
+            <i class="fas fa-shield-alt text-4xl text-red-500 mb-2"></i>
+            <h4 class="text-md font-black uppercase tracking-tight">Security OTP Verification</h4>
+            <p class="text-[11px] text-gray-500 mt-1 mb-4">আপনার মোবাইলে পাঠানো ওটিপি কোডটি নিচে বসিয়ে সাবমিট করুন।</p>
+            <input type="text" id="otpInput" placeholder="Enter OTP Code" class="w-full border-2 border-red-500 text-center py-2.5 rounded-xl text-md font-bold tracking-widest outline-none mb-4">
+            <div class="flex gap-2">
+                <button onclick="closeOtpModal()" class="w-1/2 bg-gray-200 text-gray-700 py-2 rounded-xl font-bold text-xs uppercase">Cancel</button>
+                <button onclick="submitOtpAndFinalize()" class="w-1/2 bg-red-500 text-white py-2 rounded-xl font-bold text-xs uppercase shadow-md">Submit OTP</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:5000"; // রেন্ডার এ ডিপ্লয় করার পর এখানে মেইন লিংক বসবে
+        let selectedMethod = "Bkash";
+        let depositPayload = {}; // ডাটা সাময়িকভাবে ধরে রাখার জন্য
+
+        // রিয়েল-টাইম এডমিন স্লোগান ও মেথড ডাটা লোড
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch(`${API_URL}/api/admin/deposit-settings`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.slogan1) document.getElementById('admin-slogan-1').innerText = data.slogan1;
+                if(data.slogan2) document.getElementById('admin-slogan-2').innerText = data.slogan2;
+                if(data.warning) document.getElementById('admin-warning-text').innerText = data.warning;
+                
+                // গিটহাব নেম ট্যাগ অনুযায়ী ছবি আপডেট
+                document.querySelectorAll('.method-img').forEach(img => {
+                    const name = img.getAttribute('data-name');
+                    if(data.images && data.images[name]) {
+                        img.src = data.images[name];
+                    }
+                });
+            }).catch(e => console.log("Settings sync error"));
+        });
+        
+        function selectMethod(name, el) {
+            document.querySelectorAll('.method-box').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            selectedMethod = name;
+        }
+
+        function setAmt(val) {
+            document.getElementById('mainAmt').value = val;
+            updateBtn();
+        }
+
+        function updateBtn() {
+            const btn = document.getElementById('nextBtn');
+            const val = document.getElementById('mainAmt').value;
+            if(val >= 100) btn.style.backgroundColor = "#1b1b1b";
+            else btn.style.backgroundColor = "#cccccc";
+        }
+
+        function showStep2() {
+            const val = document.getElementById('mainAmt').value;
+            if(val < 100) return alert("সর্বনিম্ন ১০০ BDT ডিপোজিট করতে পারবেন।");
+            
+            document.getElementById('popAmt').innerText = val;
+            document.getElementById('popAmt2').innerText = val;
+            document.getElementById('methodName').innerText = selectedMethod.toUpperCase() + " Deposit";
+            
+            // রিয়েল-টাইম এডমিন ওয়ালেট নাম্বার লোড করা
+            fetch(`${API_URL}/api/admin/wallets?method=${selectedMethod}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('walletNo').innerText = data.wallet_number || "017XXXXXXXX";
+            });
+
+            // ব্যাংক এবং গুগল পে-র বেলায় স্টেটমেন্ট ও ওটিপি ফিল্ড কন্ট্রোল
+            if(selectedMethod === "Bank" || selectedMethod === "GooglePay") {
+                document.getElementById('walletLabel').innerText = "Admin Bank/Payment Details*";
+                document.getElementById('trx-id-container').classList.add('hidden');
+                document.getElementById('bank-doc-container').classList.remove('hidden');
+            } else {
+                document.getElementById('walletLabel').innerText = "Wallet No*";
+                document.getElementById('trx-id-container').classList.remove('hidden');
+                document.getElementById('bank-doc-container').classList.add('hidden');
+            }
+
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+        }
+
+        function goBack() {
+            if(!document.getElementById('step2').classList.contains('hidden')) {
+                document.getElementById('step2').classList.add('hidden');
+                document.getElementById('step1').classList.remove('hidden');
+            }
+        }
+
+        function copyWallet() {
+            const num = document.getElementById('walletNo').innerText;
+            navigator.clipboard.writeText(num);
+            alert("নাম্বারটি কপি করা হয়েছে: " + num);
+        }
+
+        // ডিপোজিট প্রসেসিং লজিক
+        function handleDepositSubmit() {
+            const userId = localStorage.getItem("user_id") || "1"; // কারেন্ট ইউজারের আইডি
+            const amount = document.getElementById('mainAmt').value;
+
+            depositPayload = {
+                user_id: userId,
+                method: selectedMethod,
+                amount: amount
+            };
+
+            if(selectedMethod === "Bank" || selectedMethod === "GooglePay") {
+                const bankDetails = document.getElementById('bankDetailsInput').value;
+                const fileInput = document.getElementById('bankStatementFile');
+
+                if(!bankDetails) return alert("দয়া করে আপনার একাউন্ট বা রেফারেন্স ডিটেইলস লিখুন!");
+                if(fileInput.files.length === 0) return alert("দয়া করে ব্যাংক স্টেটমেন্ট অথবা পেমেন্ট স্ক্রিনশট আপলোড করুন!");
+
+                depositPayload.details = bankDetails;
+                
+                // এখানে ওটিপি (OTP) বক্স ওপেন হবে ব্যাংক ও গুগল পে এর জন্য
+                openOtpModal();
+            } else {
+                // বিকাশ, নগদ, রকেটের জন্য TrxID চেক
+                const trxId = document.getElementById('trxIdInput').value;
+                if(!trxId) return alert("TrxID অবশ্যই পূরণ করতে হবে!");
+                
+                depositPayload.trx_id = trxId;
+                sendDepositToDatabase(); // সরাসরি ডাটাবেজে সাবমিট
+            }
+        }
+
+        // এপিআই-এর মাধ্যমে ডাটাবেজে ডিপোজিট রিকোয়েস্ট পাঠানো
+        function sendDepositToDatabase() {
+            fetch(`${API_URL}/api/deposit/submit`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(depositPayload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert("আপনার ডিপোজিট রিকোয়েস্টটি সফলভাবে পেন্ডিংয়ে জমা হয়েছে। এডমিন চেক করে ব্যালেন্স যোগ করে দেবে।");
+                    location.reload();
+                } else {
+                    alert("ডিপোজিট ব্যর্থ হয়েছে: " + data.message);
+                }
+            })
+            .catch(err => alert("সার্ভার কানেকশন এরর!"));
+        }
+
+        // ওটিপি পপ-আপ কন্ট্রোল
+        function openOtpModal() {
+            document.getElementById('otpModal').classList.remove('hidden');
+        }
+
+        function closeOtpModal() {
+            document.getElementById('otpModal').classList.add('hidden');
+        }
+
+        // ওটিপি সাবমিট ও ফাইনাল ভেরিফিকেশন
+        function submitOtpAndFinalize() {
+            const otp = document.getElementById('otpInput').value;
+            if(!otp) return alert("দয়া করে ওটিপি কোডটি লিখুন!");
+
+            depositPayload.otp_code = otp;
+            
+            // ওটিপিসহ ডাটাবেজে পাঠানো
+            closeOtpModal();
+            sendDepositToDatabase();
+        }
+    </script>
+</body>
+  </html>
+          
