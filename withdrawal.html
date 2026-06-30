@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinR666 - Premium Withdrawal System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: radial-gradient(circle at top, #0d5c2f, #052111); color: white; user-select: none; font-family: sans-serif; overflow-x: hidden; }
+        .gold-glow { color: #FFD700; text-shadow: 0 0 10px #ffaa00; font-weight: 900; }
+        
+        /* মেথড বক্স স্টাইল */
+        .method-box {
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 12px 4px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+            transition: 0.3s;
+        }
+        .method-box.active {
+            border: 2px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .method-box.active::after {
+            content: "\f058";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            bottom: 4px;
+            right: 6px;
+            color: #ef4444;
+            font-size: 11px;
+        }
+
+        /* ফুটার বাটন স্টাইল */
+        .footer-icon { color: #3b82f6; text-shadow: 0 0 12px #3b82f6; transition: 0.3s; }
+        .footer-icon:active { transform: scale(0.9); color: #FFD700; }
+        .active-withdraw { color: #FFD700; text-shadow: 0 0 15px #FFD700; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <!-- হেডার এরিয়া -->
+    <header class="fixed top-0 w-full z-50 bg-[#052111]/90 backdrop-blur-lg border-b border-yellow-500/30 px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="index.html" class="text-xl text-yellow-500 active:scale-90 transition"><i class="fas fa-chevron-left"></i></a>
+            <h1 class="text-xl gold-glow italic tracking-tighter">Withdraw</h1>
+        </div>
+        <div class="bg-black/60 px-4 py-2 rounded-full border border-yellow-500/40 flex items-center shadow-inner">
+            <i class="fas fa-wallet text-yellow-500 mr-2 text-sm"></i>
+            <!-- রিয়েল-টাইম কারেন্ট ব্যালেন্স এখানে দেখাবে -->
+            <span id="current-balance" class="text-sm font-black text-green-400">৳ 0.00</span>
+        </div>
+    </header>
+
+    <!-- মেইন ফর্ম এরিয়া -->
+    <main class="pt-24 pb-32 px-4 max-w-md mx-auto min-h-screen">
+        
+        <!-- উইথড্র মেথড সিলেকশন -->
+        <h3 class="text-[13px] font-bold text-yellow-500 mb-3 flex items-center gap-1 uppercase tracking-wider">
+            <span class="text-orange-500">●</span> Select Withdrawal Method
+        </h3>
+        
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <div onclick="selectMethod('Bkash', this)" class="method-box active">
+                <img src="https://logowik.com/content/uploads/images/bkash-payment-icon9465.jpg" class="w-10 h-10 mx-auto object-contain rounded-md">
+                <p class="text-[10px] mt-1 font-bold text-gray-300">Bkash</p>
+            </div>
+            <div onclick="selectMethod('Nagad', this)" class="method-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nagad_Logo.svg/1200px-Nagad_Logo.svg.png" class="w-10 h-10 mx-auto object-contain rounded-md">
+                <p class="text-[10px] mt-1 font-bold text-gray-300">NAGAD</p>
+            </div>
+            <div onclick="selectMethod('Rocket', this)" class="method-box">
+                <img src="https://seeklogo.com/images/R/rocket-logo-5D19363943-seeklogo.com.png" class="w-10 h-10 mx-auto object-contain rounded-md">
+                <p class="text-[10px] mt-1 font-bold text-gray-300">ROCKET</p>
+            </div>
+        </div>
+
+        <!-- নোটিশ এরিয়া -->
+        <div class="bg-amber-500/10 border border-amber-500/20 p-3 rounded-xl mb-6">
+            <p class="text-[11px] text-amber-400 font-medium leading-tight">
+                * সতর্কবার্তা: দয়া করে আপনার ব্যক্তিগত এবং সঠিক পার্সোনাল একাউন্ট নাম্বারটি দিন। ভুল নাম্বারে টাকা পাঠালে কর্তৃপক্ষ দায়ী থাকবে না। সর্বনিম্ন উইথড্র ৫০০ BDT।
+            </p>
+        </div>
+
+        <!-- উইথড্র ইনপুট ফর্ম -->
+        <div class="space-y-4 bg-black/20 border border-white/5 p-5 rounded-[2rem] shadow-xl">
+            
+            <!-- একাউন্ট নাম্বার -->
+            <div class="space-y-1">
+                <label class="text-[10px] text-gray-400 uppercase font-black tracking-wider block">Your Account Number (Personal)*</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-500 text-xs"><i class="fas fa-phone-alt"></i></span>
+                    <input type="text" id="withdrawAccount" placeholder="বিকাশ/নগদ/রকেট নাম্বারটি লিখুন" class="w-full bg-black/40 border border-white/10 p-3.5 pl-10 rounded-xl text-xs font-bold outline-none text-white focus:border-yellow-500/50">
+                </div>
+            </div>
+
+            <!-- উইথড্র অ্যামাউন্ট -->
+            <div class="space-y-1">
+                <label class="text-[10px] text-gray-400 uppercase font-black tracking-wider block">Withdraw Amount (BDT)*</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3 text-gray-400 font-black text-sm">৳</span>
+                    <input type="number" id="withdrawAmount" placeholder="সর্বনিম্ন ৫০০ BDT" class="w-full bg-black/40 border border-white/10 p-3.5 pl-9 rounded-xl text-xs font-bold outline-none text-white focus:border-yellow-500/50">
+                </div>
+            </div>
+
+            <!-- সিকিউরিটি পাসওয়ার্ড -->
+            <div class="space-y-1">
+                <label class="text-[10px] text-gray-400 uppercase font-black tracking-wider block">Security Password*</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-500 text-xs"><i class="fas fa-lock"></i></span>
+                    <input type="password" id="withdrawPassword" placeholder="আপনার অ্যাকাউন্টের পাসওয়ার্ড দিন" class="w-full bg-black/40 border border-white/10 p-3.5 pl-10 rounded-xl text-xs font-bold outline-none text-white focus:border-yellow-500/50">
+                </div>
+            </div>
+
+            <!-- সাবমিট বাটন -->
+            <button onclick="handleWithdrawSubmit()" class="w-full bg-gradient-to-r from-red-600 to-orange-600 text-white font-black py-3.5 rounded-xl text-xs uppercase shadow-lg active:scale-95 transition-all mt-4 tracking-wider">
+                Submit Withdrawal Request
+            </button>
+        </div>
+
+    </main>
+
+    <!-- স্টিকি ফুটবার (ন্যাভিগেশন) -->
+    <footer class="fixed bottom-0 w-full bg-[#052111] border-t border-yellow-500/20 h-20 flex justify-around items-center px-2 z-[100]">
+        <a href="index.html" class="flex flex-col items-center footer-icon">
+            <i class="fas fa-home text-xl"></i><span class="text-[9px] mt-1 font-bold">Home</span>
+        </a>
+        <a href="deposit.html" class="flex flex-col items-center footer-icon pl-2">
+            <i class="fas fa-wallet text-xl"></i><span class="text-[9px] mt-1 font-bold">Deposit</span>
+        </a>
+        <a href="#" class="flex flex-col items-center active-withdraw px-4">
+            <i class="fas fa-money-check-alt text-xl"></i><span class="text-[9px] mt-1 font-bold">Withdraw</span>
+        </a>
+        <a href="support.html" class="flex flex-col items-center footer-icon">
+            <i class="fas fa-headset text-xl"></i><span class="text-[9px] mt-1 font-bold">Support</span>
+        </a>
+    </footer>
+
+    <script>
+        const API_URL = "http://localhost:5000"; // Render এ ডিপ্লয় করার পর এখানে মেইন ইউআরএল বসবে
+        let selectedMethod = "Bkash";
+        let userCurrentBalance = 0.00;
+
+        // পেজ লোড হওয়ার সাথে সাথে ইউজারের বর্তমান ব্যালেন্স সিঙ্ক হবে
+        document.addEventListener("DOMContentLoaded", function() {
+            const userId = localStorage.getItem("user_id") || "1";
+            
+            fetch(`${API_URL}/api/user/profile?id=${userId}`)
+            .then(res => res.json())
+            .then(user => {
+                if(user && user.balance) {
+                    userCurrentBalance = parseFloat(user.balance);
+                    document.getElementById('current-balance').innerText = "৳ " + userCurrentBalance.toFixed(2);
+                }
+            }).catch(e => console.log("Balance sync error"));
+        });
+
+        function selectMethod(name, el) {
+            document.querySelectorAll('.method-box').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            selectedMethod = name;
+        }
+
+        // উইথড্র সাবমিশন হ্যান্ডেলার
+        function handleWithdrawSubmit() {
+            const userId = localStorage.getItem("user_id") || "1";
+            const accountNo = document.getElementById('withdrawAccount').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const password = document.getElementById('withdrawPassword').value;
+
+            // ভ্যালিডেশন চেক
+            if(!accountNo) return alert("দয়া করে আপনার উইথড্র অ্যাকাউন্ট নাম্বারটি লিখুন!");
+            if(!amount || amount < 500) return alert("সর্বনিম্ন উইথড্র সীমা ৫০০ BDT!");
+            if(!password) return alert("নিরাপত্তার জন্য আপনার পাসওয়ার্ডটি দেওয়া আবশ্যক!");
+
+            // পর্যাপ্ত ব্যালেন্স আছে কিনা চেক
+            if(amount > userCurrentBalance) {
+                return alert("দুঃখিত! আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই। আপনার বর্তমান ব্যালেন্স: ৳" + userCurrentBalance.toFixed(2));
+            }
+
+            const payload = {
+                user_id: userId,
+                method: selectedMethod,
+                account_number: accountNo,
+                amount: amount,
+                password: password
+            };
+
+            // ব্যাকএন্ড এপিআই-তে রিকোয়েস্ট পাঠানো
+            fetch(`${API_URL}/api/withdraw/submit`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    alert("আপনার উইথড্র রিকোয়েস্টটি সফলভাবে সাবমিট হয়েছে। এডমিন প্যানেল থেকে রিভিউ করে ১-২ ঘণ্টার মধ্যে পেমেন্ট কমপ্লিট করা হবে। ধন্যবাদ!");
+                    location.reload();
+                } else {
+                    alert("উইথড্র ব্যর্থ হয়েছে: " + data.message);
+                }
+            })
+            .catch(err => alert("সার্ভার কানেকশন এরর! দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।"));
+        }
+    </script>
+</body>
+      </html>
+                  
